@@ -4,11 +4,11 @@ import { fetchMeals, deleteMeal } from "../redux/Meals.tsx";
 import { FaPlus } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import { MdOutlineDeleteForever } from "react-icons/md";
-
+import { AppDispatch } from "../redux/store";
 
 export default function MealsList() {
     const { meals, loading, error } = useSelector(state => state.meals)
-    const dispatch = useDispatch()
+    const dispatch: AppDispatch = useDispatch()
 
     useEffect(() => {
         dispatch(fetchMeals())

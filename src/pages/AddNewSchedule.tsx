@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addSchedule } from '../redux/Pets.tsx'
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
+import { AppDispatch } from "../redux/store";
 
 export default function AddNewMeal() {
     const { pets } = useSelector(state => state.pets)
-    const dispatch = useDispatch()
+    const dispatch: AppDispatch = useDispatch()
     const [scheduledPet, setScheduledPet] = useState('');
     const [name, setName] = useState('');
     const [days, setDays] = useState('');

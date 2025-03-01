@@ -4,10 +4,11 @@ import { fetchPets, deletePet } from "../redux/Pets.tsx"
 import { FaPlus } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import { useLongPress } from 'use-long-press';
+import { AppDispatch } from "../redux/store";
 
 export default function PetList() {
     const { pets, loading, error } = useSelector(state => state.pets)
-    const dispatch = useDispatch()
+    const dispatch: AppDispatch = useDispatch()
 
     useEffect(() => {
         dispatch(fetchPets())

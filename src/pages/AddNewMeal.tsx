@@ -4,9 +4,10 @@ import { useDispatch } from 'react-redux';
 import { addMeal } from '../redux/Meals.tsx'
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import { AppDispatch } from "../redux/store";
 
 export default function AddNewMeal() {
-    const dispatch = useDispatch()
+    const dispatch: AppDispatch = useDispatch()
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [type, setType] = useState('');

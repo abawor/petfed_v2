@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { db } from "../firebase/config.js";
 import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
+import { AppDispatch } from "../redux/store";
 
 export const mealsSlice = createSlice({
     name: "meals",
@@ -27,7 +28,7 @@ export const mealsSlice = createSlice({
 
 export const { setMeals, setLoading, setError, deleteMealLocally } = mealsSlice.actions
 
-export const fetchMeals = () => async (dispatch) => {
+export const fetchMeals = () => async (dispatch: AppDispatch) => {
     dispatch(setLoading(true))
     try {
         const mealsCol = collection(db, "meals")
@@ -44,7 +45,7 @@ export const fetchMeals = () => async (dispatch) => {
     }
 }
 
-export const addMeal = (meal) => async (dispatch) => {
+export const addMeal = (meal) => async (dispatch: AppDispatch) => {
     try {
         const mealsCol = collection(db, "meals")
         const docRef = await addDoc(mealsCol, meal)
@@ -53,7 +54,7 @@ export const addMeal = (meal) => async (dispatch) => {
     }
 }
 
-export const deleteMeal = (mealId) => async (dispatch) => {
+export const deleteMeal = (mealId) => async (dispatch: AppDispatch) => {
     try {
         const mealDoc = doc(db, "meals", mealId)
         await deleteDoc(mealDoc)

@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { produce } from "immer";
 import { db } from "../firebase/config.js";
-import { collection, getDoc, getDocs, addDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDoc, getDocs, addDoc, updateDoc, arrayUnion, deleteDoc, doc } from "firebase/firestore";
+import { AppDispatch } from "../redux/store";
 
 export const petsSlice = createSlice({
     name: "pets",
@@ -48,7 +49,7 @@ export const petsSlice = createSlice({
 
 export const { setPets, setLoading, setError, deletePetLocally, toggleLocalNotification, deleteScheduleLocally } = petsSlice.actions
 
-export const fetchPets = () => async (dispatch) => {
+export const fetchPets = () => async (dispatch: AppDispatch) => {
     dispatch(setLoading(true))
     try {
         const petsCol = collection(db, "pets")
@@ -65,7 +66,7 @@ export const fetchPets = () => async (dispatch) => {
     }
 }
 
-export const addPet = (pet) => async (dispatch) => {
+export const addPet = (pet) => async (dispatch: AppDispatch) => {
     try {
         const petsCol = collection(db, "pets")
         const docRef = await addDoc(petsCol, pet)
@@ -74,7 +75,7 @@ export const addPet = (pet) => async (dispatch) => {
     }
 }
 
-export const deletePet = (petId) => async (dispatch) => {
+export const deletePet = (petId) => async (dispatch: AppDispatch) => {
     try {
         const petDoc = doc(db, "pets", petId)
         await deleteDoc(petDoc)
@@ -84,7 +85,7 @@ export const deletePet = (petId) => async (dispatch) => {
     }
 }
 
-export const addSchedule = (array) => async (dispatch) => {
+export const addSchedule = (array) => async (dispatch: AppDispatch) => {
     const petId = array[0].value
     const newSchedule = array[1]
 
@@ -98,7 +99,7 @@ export const addSchedule = (array) => async (dispatch) => {
     }
 }
 
-export const toggleNotification = (array) => async (dispatch) => {
+export const toggleNotification = (array) => async (dispatch: AppDispatch) => {
     const petId = array[0]
     const scheduleId = array[1]
 
@@ -123,7 +124,7 @@ export const toggleNotification = (array) => async (dispatch) => {
     }
 }
 
-export const deleteSchedule = (array) => async (dispatch) => {
+export const deleteSchedule = (array) => async (dispatch: AppDispatch) => {
     const petId = array[0]
     const scheduleId = array[1]
 

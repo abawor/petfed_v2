@@ -4,9 +4,10 @@ import { useDispatch } from "react-redux"
 import { addPet } from "../redux/Pets.tsx"
 import { MdOutlineAddAPhoto } from 'react-icons/md';
 import PetIcon from '../assets/android-chrome-192x192.png';
+import { AppDispatch } from "../redux/store";
 
 export default function AddNewPet() {
-  const dispatch = useDispatch()
+  const dispatch: AppDispatch = useDispatch()
   const [photo, setPhoto] = useState(PetIcon);
   const [name, setName] = useState("");
   const navigate = useNavigate();

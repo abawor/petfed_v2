@@ -6,11 +6,12 @@ import { Link } from 'react-router-dom';
 import { MdOutlineDeleteForever } from 'react-icons/md';
 import Toggle from 'react-toggle';
 import 'react-toggle/style.css';
+import { AppDispatch } from "../redux/store";
 
 
 export default function ScheduleList() {
     const { pets } = useSelector(state => state.pets)
-    const dispatch = useDispatch()
+    const dispatch: AppDispatch = useDispatch()
     
     useEffect(() => {
         dispatch(fetchPets())
