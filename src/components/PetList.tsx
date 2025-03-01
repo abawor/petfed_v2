@@ -5,16 +5,18 @@ import { FaPlus } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import { useLongPress } from 'use-long-press';
 import { AppDispatch } from "../redux/store";
+import { RootState } from "../redux/store";
+import { Pet } from "../../types.ts";
 
 export default function PetList() {
-    const { pets, loading, error } = useSelector(state => state.pets)
+    const { pets, loading, error } = useSelector((state: RootState) => state.pets)
     const dispatch: AppDispatch = useDispatch()
 
     useEffect(() => {
         dispatch(fetchPets())
     }, [dispatch])
 
-    const handleDelete = (petId => {
+    const handleDelete = ((petId: Pet["id"]) => {
         if(!confirm("Are you sure you want to delete this pet?\nYou will not be able to undo this action")) {
             return
         }
@@ -23,7 +25,7 @@ export default function PetList() {
     })
 
     const bind = useLongPress((callback, petId) => 
-        handleDelete(petId.context),
+        handleDelete(String(petId.context)),
         {threshold: 1000,}
     )
 

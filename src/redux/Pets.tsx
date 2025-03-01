@@ -3,14 +3,23 @@ import { produce } from "immer";
 import { db } from "../firebase/config.js";
 import { collection, getDoc, getDocs, addDoc, updateDoc, arrayUnion, deleteDoc, doc } from "firebase/firestore";
 import { AppDispatch } from "../redux/store";
+import { Pet } from "../../types.ts";
+
+type PetsState = {
+    pets: Pet[];
+    loading: boolean;
+    error: string | null;
+};
+
+const initialState: PetsState = {
+    pets: [],
+    loading: false,
+    error: null
+};
 
 export const petsSlice = createSlice({
     name: "pets",
-    initialState: {
-        pets: [],
-        loading: false,
-        error: null
-    },
+    initialState: initialState,
     reducers: {
         setPets: (state, action) => {
             state.pets = action.payload
@@ -30,8 +39,16 @@ export const petsSlice = createSlice({
 
             return produce(state, draft => {
                 const pet = draft.pets.find(pet => pet.id === petId)
-                const schedule = pet.schedules.find(schedule => schedule.id === scheduleId)
+                if (!pet) {
+                    alert("Error: Pet not found")
+                    return
+                }
 
+                const schedule = pet.schedules.find(schedule => schedule.id === scheduleId)
+                if (!schedule) {
+                    alert("Error: Schedule not found")
+                    return
+                }
                 schedule.reminder = !schedule.reminder
             })
         },
@@ -41,6 +58,10 @@ export const petsSlice = createSlice({
 
             return produce(state, draft => {
                 const pet = draft.pets.find(pet => pet.id === petId)
+                if (!pet) {
+                    alert("Error: Pet not found")
+                    return
+                }
                 pet.schedules = pet.schedules.filter(schedule => schedule.id != scheduleId)
             })
         }
@@ -60,28 +81,40 @@ export const fetchPets = () => async (dispatch: AppDispatch) => {
         }))
         dispatch(setPets(pets))
     } catch (error) {
-        dispatch(setError(error.message))
+        if (error instanceof Error) {
+            dispatch(setError(error.message))
+        } else {
+            dispatch(setError("An unknown error occurred"))
+        }
     } finally {
         dispatch(setLoading(false))
     }
 }
 
-export const addPet = (pet) => async (dispatch: AppDispatch) => {
+export const addPet = (pet: Pet) => async (dispatch: AppDispatch) => {
     try {
         const petsCol = collection(db, "pets")
-        const docRef = await addDoc(petsCol, pet)
+        await addDoc(petsCol, pet)
     } catch (error) {
-        dispatch(setError(error.message))
+        if (error instanceof Error) {
+            dispatch(setError(error.message))
+        } else {
+            dispatch(setError("An unknown error occurred"))
+        }
     }
 }
 
-export const deletePet = (petId) => async (dispatch: AppDispatch) => {
+export const deletePet = (petId: Pet["id"]) => async (dispatch: AppDispatch) => {
     try {
         const petDoc = doc(db, "pets", petId)
         await deleteDoc(petDoc)
         dispatch(deletePetLocally(petId))
     } catch (error) {
-        dispatch(setError(error.message))
+        if (error instanceof Error) {
+            dispatch(setError(error.message))
+        } else {
+            dispatch(setError("An unknown error occurred"))
+        }
     }
 }
 
@@ -95,7 +128,11 @@ export const addSchedule = (array) => async (dispatch: AppDispatch) => {
             schedules: arrayUnion(newSchedule)
         })
     } catch (error) {
-        dispatch(setError(error.message))
+        if (error instanceof Error) {
+            dispatch(setError(error.message))
+        } else {
+            dispatch(setError("An unknown error occurred"))
+        }
     }
 }
 
@@ -107,7 +144,10 @@ export const toggleNotification = (array) => async (dispatch: AppDispatch) => {
         const petRef = doc(db, "pets", petId)
         const petDoc = await getDoc(petRef)
         const petData = petDoc.data()
-
+        if (!petData) {
+            alert("Error: Pet not found")
+            return
+        }
         const updatedSchedules = petData.schedules.map(schedule => 
             schedule.id === scheduleId ?
                 { ...schedule, reminder: !schedule.reminder }
@@ -120,7 +160,11 @@ export const toggleNotification = (array) => async (dispatch: AppDispatch) => {
         
         dispatch(toggleLocalNotification(array))
     } catch (error) {
-        dispatch(setError(error.message))
+        if (error instanceof Error) {
+            dispatch(setError(error.message))
+        } else {
+            dispatch(setError("An unknown error occurred"))
+        }
     }
 }
 
@@ -140,7 +184,11 @@ export const deleteSchedule = (array) => async (dispatch: AppDispatch) => {
 
         dispatch(deleteScheduleLocally(array))
     } catch (error) {
-        dispatch(setError(error.message))
+        if (error instanceof Error) {
+            dispatch(setError(error.message))
+        } else {
+            dispatch(setError("An unknown error occurred"))
+        }
     }
 }
 
