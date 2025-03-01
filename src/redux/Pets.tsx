@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { produce } from "immer";
-import { db } from "../firebase/config.js";
+import { db } from "../firebase/config.ts";
 import { collection, getDoc, getDocs, addDoc, updateDoc, arrayUnion, deleteDoc, doc } from "firebase/firestore";
 import { AppDispatch } from "../redux/store";
-import { Pet } from "../../types.ts";
+import { Pet, Schedule } from "../../types.ts";
 
 type PetsState = {
     pets: Pet[];
@@ -118,8 +118,8 @@ export const deletePet = (petId: Pet["id"]) => async (dispatch: AppDispatch) => 
     }
 }
 
-export const addSchedule = (array) => async (dispatch: AppDispatch) => {
-    const petId = array[0].value
+export const addSchedule = (array: [Pet["id"], Schedule]) => async (dispatch: AppDispatch) => {
+    const petId = array[0]
     const newSchedule = array[1]
 
     try {
@@ -136,7 +136,7 @@ export const addSchedule = (array) => async (dispatch: AppDispatch) => {
     }
 }
 
-export const toggleNotification = (array) => async (dispatch: AppDispatch) => {
+export const toggleNotification = (array: [Pet["id"], Schedule["id"]]) => async (dispatch: AppDispatch) => {
     const petId = array[0]
     const scheduleId = array[1]
 
@@ -148,7 +148,7 @@ export const toggleNotification = (array) => async (dispatch: AppDispatch) => {
             alert("Error: Pet not found")
             return
         }
-        const updatedSchedules = petData.schedules.map(schedule => 
+        const updatedSchedules = petData.schedules.map((schedule: Schedule) => 
             schedule.id === scheduleId ?
                 { ...schedule, reminder: !schedule.reminder }
                 : schedule
@@ -168,7 +168,7 @@ export const toggleNotification = (array) => async (dispatch: AppDispatch) => {
     }
 }
 
-export const deleteSchedule = (array) => async (dispatch: AppDispatch) => {
+export const deleteSchedule = (array: [Pet["id"], Schedule["id"]]) => async (dispatch: AppDispatch) => {
     const petId = array[0]
     const scheduleId = array[1]
 
@@ -176,7 +176,11 @@ export const deleteSchedule = (array) => async (dispatch: AppDispatch) => {
         const petRef = doc(db, "pets", petId)
         const petDoc = await getDoc(petRef)
         const petData = petDoc.data()
-        const updatedSchedules = petData.schedules.filter(schedule => schedule.id != scheduleId)
+        if (!petData) {
+            alert("Error: Pet not found")
+            return
+        }
+        const updatedSchedules = petData.schedules.filter((schedule: Schedule) => schedule.id != scheduleId)
         
         await updateDoc(petRef, {
             schedules: updatedSchedules

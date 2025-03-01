@@ -4,6 +4,7 @@ import { addSchedule } from '../redux/Pets.tsx'
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { AppDispatch } from "../redux/store";
+import { Pet } from "../../types.ts";
 
 export default function AddNewMeal() {
     const { pets } = useSelector(state => state.pets)
@@ -66,7 +67,7 @@ export default function AddNewMeal() {
                     <Select
                         options={petList}
                         isMulti={false}
-                        onChange={setScheduledPet}
+                        onChange={(e: {value: Pet["id"], label: string} ) => setScheduledPet(e.value)}
                         placeholder="Pet"
                     />
                 </div>

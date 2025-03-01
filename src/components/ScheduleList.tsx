@@ -7,17 +7,19 @@ import { MdOutlineDeleteForever } from 'react-icons/md';
 import Toggle from 'react-toggle';
 import 'react-toggle/style.css';
 import { AppDispatch } from "../redux/store";
+import { RootState } from "../redux/store";
+import { Pet, Schedule } from "../../types.ts";
 
 
 export default function ScheduleList() {
-    const { pets } = useSelector(state => state.pets)
+    const { pets } = useSelector((state: RootState) => state.pets)
     const dispatch: AppDispatch = useDispatch()
     
     useEffect(() => {
         dispatch(fetchPets())
     }, [dispatch])
 
-    const handleDelete = (petId, scheduleId) => {
+    const handleDelete = (petId: Pet["id"], scheduleId: Schedule["id"]) => {
       if(!confirm("Are you sure?\nYou will not be able to undo this action")) {
         return
       }
