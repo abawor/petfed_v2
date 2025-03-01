@@ -5,6 +5,7 @@ import { addPet } from "../redux/Pets.tsx"
 import { MdOutlineAddAPhoto } from 'react-icons/md';
 import PetIcon from '../assets/android-chrome-192x192.png';
 import { AppDispatch } from "../redux/store";
+import { NewPet } from "../../types.ts";
 
 export default function AddNewPet() {
   const dispatch: AppDispatch = useDispatch()
@@ -18,7 +19,7 @@ export default function AddNewPet() {
       return;
     }
 
-    const newPet = {
+    const newPet: NewPet = {
       name: name,
       photo: photo,
       schedules: [],

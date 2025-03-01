@@ -1,3 +1,10 @@
+export type NewPet = {
+    name: string;
+    photo: string;
+    schedules: Schedule[];
+    feedingLog: [];
+};
+
 export type Pet = {
     id: string;
     name: string;

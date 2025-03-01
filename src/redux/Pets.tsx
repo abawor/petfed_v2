@@ -3,7 +3,7 @@ import { produce } from "immer";
 import { db } from "../firebase/config.ts";
 import { collection, getDoc, getDocs, addDoc, updateDoc, arrayUnion, deleteDoc, doc } from "firebase/firestore";
 import { AppDispatch } from "../redux/store";
-import { Pet, Schedule } from "../../types.ts";
+import { NewPet, Pet, Schedule } from "../../types.ts";
 
 type PetsState = {
     pets: Pet[];
@@ -91,7 +91,7 @@ export const fetchPets = () => async (dispatch: AppDispatch) => {
     }
 }
 
-export const addPet = (pet: Pet) => async (dispatch: AppDispatch) => {
+export const addPet = (pet: NewPet) => async (dispatch: AppDispatch) => {
     try {
         const petsCol = collection(db, "pets")
         await addDoc(petsCol, pet)
