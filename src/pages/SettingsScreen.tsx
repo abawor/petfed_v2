@@ -4,11 +4,12 @@ import 'react-toggle/style.css';
 
 
 export default function SettingsScreen() {
-    const savedNotifications = localStorage.getItem("globalNotifications")
-    const [notifications, setNotificiations] = useState(savedNotifications ? savedNotifications === "true" : true)
+    const localNotifications = localStorage.getItem("globalNotifications")
+    const globalNotifications = localNotifications ? localNotifications === "true" : true
+    const [notifications, setNotifications] = useState(globalNotifications)
 
     useEffect(() => {
-        localStorage.setItem("globalNotifications", notifications)
+        localStorage.setItem("globalNotifications", String(notifications))
     }, [notifications])    
 
     return (
@@ -17,7 +18,7 @@ export default function SettingsScreen() {
             <Toggle
                 className=""
                 checked={notifications}
-                onChange={() => setNotificiations(!notifications)}
+                onChange={() => setNotifications(!notifications)}
             />
         </div>
     )
