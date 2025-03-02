@@ -3,18 +3,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addSchedule } from '../redux/Pets.tsx'
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
-import { AppDispatch } from "../redux/store";
-import { Pet } from "../../types.ts";
+import { SingleValue, MultiValue } from "react-select";
+import { AppDispatch, RootState } from "../redux/store";
+import { Pet, Schedule } from "../../types.ts";
 
 export default function AddNewMeal() {
-    const { pets } = useSelector(state => state.pets)
+    const { pets } = useSelector((state: RootState) => state.pets)
     const dispatch: AppDispatch = useDispatch()
     const [scheduledPet, setScheduledPet] = useState('');
     const [name, setName] = useState('');
-    const [days, setDays] = useState('');
+    const [days, setDays] = useState<MultiValue<{value: string, label: string}>>([]);
     const [time, setTime] = useState('');
     const navigate = useNavigate();
-
+    console.log(days)
     const petList = 
         pets.map((pet) => {
             return (
@@ -67,7 +68,10 @@ export default function AddNewMeal() {
                     <Select
                         options={petList}
                         isMulti={false}
-                        onChange={(e: {value: Pet["id"], label: string} ) => setScheduledPet(e.value)}
+                        onChange={(e: SingleValue<{value: Pet["id"], label: string}>) => {
+                            if (e) {
+                                setScheduledPet(e.value)}}
+                            }
                         placeholder="Pet"
                     />
                 </div>
@@ -84,7 +88,8 @@ export default function AddNewMeal() {
                     <Select
                         options={weekdays}
                         isMulti={true}
-                        onChange={setDays}
+                        onChange={(e: MultiValue<{value: string, label: string}>) => {
+                            setDays(e)}}
                         placeholder="Days"
                     />
                 </div>
