@@ -2,14 +2,23 @@ import { createSlice } from "@reduxjs/toolkit";
 import { db } from "../firebase/config.ts";
 import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
 import { AppDispatch } from "../redux/store";
+import { Meal } from "../../types.ts";
+
+type MealsState = {
+    meals: Meal[];
+    loading: boolean;
+    error: string | null;
+};
+
+const initialState: MealsState = {
+    meals: [],
+    loading: false,
+    error: null
+}
 
 export const mealsSlice = createSlice({
     name: "meals",
-    initialState: {
-        meals: [],
-        loading: false,
-        error: null
-    },
+    initialState: initialState,
     reducers: {
         setMeals: (state, action) => {
             state.meals = action.payload
@@ -39,28 +48,40 @@ export const fetchMeals = () => async (dispatch: AppDispatch) => {
         }))
         dispatch(setMeals(meals))
     } catch (error) {
-        dispatch(setError(error.message))
+        if (error instanceof Error) {
+            dispatch(setError(error.message))
+        } else {
+            dispatch(setError("An unknown error occurred"))
+        }
     } finally {
         dispatch(setLoading(false))
     }
 }
 
-export const addMeal = (meal) => async (dispatch: AppDispatch) => {
+export const addMeal = (meal: Meal) => async (dispatch: AppDispatch) => {
     try {
         const mealsCol = collection(db, "meals")
-        const docRef = await addDoc(mealsCol, meal)
+        await addDoc(mealsCol, meal)
     } catch (error) {
-        dispatch(setError(error.message))
+        if (error instanceof Error) {
+            dispatch(setError(error.message))
+        } else {
+            dispatch(setError("An unknown error occurred"))
+        }
     }
 }
 
-export const deleteMeal = (mealId) => async (dispatch: AppDispatch) => {
+export const deleteMeal = (mealId: Meal["id"]) => async (dispatch: AppDispatch) => {
     try {
         const mealDoc = doc(db, "meals", mealId)
         await deleteDoc(mealDoc)
         dispatch(deleteMealLocally(mealId))
     } catch (error) {
-        dispatch(setError(error.message))
+        if (error instanceof Error) {
+            dispatch(setError(error.message))
+        } else {
+            dispatch(setError("An unknown error occurred"))
+        }
     }
 }
 
