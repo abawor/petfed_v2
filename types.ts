@@ -13,6 +13,13 @@ export type Pet = {
     feedingLog: [];
 };
 
+export type NewMeal = {
+    name: string;
+    quantity: string;
+    type: string;
+    unit: string;
+};
+
 export type Meal = {
     id: string;
     name: string;

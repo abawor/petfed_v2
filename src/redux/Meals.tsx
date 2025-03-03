@@ -2,16 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 import { db } from "../firebase/config.ts";
 import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
 import { AppDispatch } from "../redux/store";
-import { Meal } from "../../types.ts";
+import { NewMeal, Meal } from "../../types.ts";
 
 type MealsState = {
-    meals: Meal[];
+    meals: Meal[] | undefined;
     loading: boolean;
     error: string | null;
 };
 
 const initialState: MealsState = {
-    meals: [],
+    meals: undefined,
     loading: false,
     error: null
 }
@@ -30,7 +30,11 @@ export const mealsSlice = createSlice({
             state.error = action.payload
         },
         deleteMealLocally: (state, action) => {
-            state.meals = state.meals.filter(meal => meal.id !== action.payload)
+            if (state.meals === undefined) {
+                alert("No meals found. Couldn't delete meal locally")
+            } else {
+                state.meals = state.meals.filter(meal => meal.id !== action.payload)
+            }
         }
     }
 });
@@ -58,7 +62,7 @@ export const fetchMeals = () => async (dispatch: AppDispatch) => {
     }
 }
 
-export const addMeal = (meal: Meal) => async (dispatch: AppDispatch) => {
+export const addMeal = (meal: NewMeal) => async (dispatch: AppDispatch) => {
     try {
         const mealsCol = collection(db, "meals")
         await addDoc(mealsCol, meal)

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { SingleValue, MultiValue } from "react-select";
 import { AppDispatch, RootState } from "../redux/store";
-import { Pet, Schedule } from "../../types.ts";
+import { Pet } from "../../types.ts";
 
 export default function AddNewMeal() {
     const { pets } = useSelector((state: RootState) => state.pets)

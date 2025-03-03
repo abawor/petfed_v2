@@ -4,17 +4,19 @@ import { fetchMeals, deleteMeal } from "../redux/Meals.tsx";
 import { FaPlus } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import { MdOutlineDeleteForever } from "react-icons/md";
-import { AppDispatch } from "../redux/store";
+import { AppDispatch, RootState } from "../redux/store";
+import { Meal } from "../../types.ts";
+
 
 export default function MealsList() {
-    const { meals, loading, error } = useSelector(state => state.meals)
+    const { meals, loading, error } = useSelector((state: RootState) => state.meals)
     const dispatch: AppDispatch = useDispatch()
 
     useEffect(() => {
         dispatch(fetchMeals())
     }, [dispatch])
 
-    const handleDelete = (mealId) => {
+    const handleDelete = (mealId: Meal["id"]) => {
         if(!confirm("Are you sure?\nYou will not be able to undo this action")) {
             return
         }
@@ -33,7 +35,7 @@ export default function MealsList() {
             >
                 <FaPlus size={75}/>
             </Link>
-            {meals !== [] || meals !== undefined ? 
+            {meals !== undefined ? 
             meals.map((meal) => {
                 return (
                     <li key={ meal.id } className="pl-1 text-start aspect-square rounded-lg border-solid border-4 border-slate-500">

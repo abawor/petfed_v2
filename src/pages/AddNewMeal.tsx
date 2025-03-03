@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addMeal } from '../redux/Meals.tsx'
+import { AppDispatch } from "../redux/store";
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-import { AppDispatch } from "../redux/store";
 
 export default function AddNewMeal() {
     const dispatch: AppDispatch = useDispatch()
