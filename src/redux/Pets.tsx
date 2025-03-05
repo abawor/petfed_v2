@@ -6,7 +6,7 @@ import { AppDispatch } from "../redux/store";
 import { NewPet, Pet, Schedule } from "../../types.ts";
 
 type PetsState = {
-    pets: Pet[];
+    pets: Pet[] | [];
     loading: boolean;
     error: string | null;
 };

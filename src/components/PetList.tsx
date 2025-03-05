@@ -29,7 +29,7 @@ export default function PetList() {
         {threshold: 1000,}
     )
 
-    if (loading) return <p>Loading pets...</p>
+    if (loading) return <p data-testid="petlist-loading">Loading pets...</p>
     if (error) return <p>Error: {error}...</p>
 
     return (
