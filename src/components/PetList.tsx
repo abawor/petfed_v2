@@ -39,6 +39,7 @@ export default function PetList() {
                     <Link
                         to="/add-new-pet"
                         className="flex justify-center items-center h-32 w-32 py-3 bg-teal-100 text-teal-500 rounded-full border-solid border-4 border-teal-500"
+                        data-testid="add-new-pet-btn"
                     >
                         <FaPlus size={75}/>
                     </Link>

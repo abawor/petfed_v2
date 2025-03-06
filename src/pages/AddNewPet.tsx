@@ -40,7 +40,7 @@ export default function AddNewPet() {
       {/* Photo Upload */}
       <div className="relative mb-4 teal-400">
         {photo === PetIcon ? (
-            <MdOutlineAddAPhoto size={250} />
+            <MdOutlineAddAPhoto size={250} data-testid="select-photo-btn"/>
           ) :
           (
             <div className="flex w-32 h-32 overflow-hidden rounded-full">
