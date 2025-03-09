@@ -3,9 +3,8 @@ import { render, screen } from "@testing-library/react";
 import userEvent from '@testing-library/user-event'
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import { MemoryRouter } from "react-router-dom";
-import { Routes, Route } from "react-router-dom";
-import petsReducer from "../redux/Pets";
+import { MemoryRouter, Routes, Route, useLocation } from "react-router-dom";
+import petsReducer from "../redux/Pets.tsx";
 import PetList from '../components/PetList.tsx';
 import AddNewPet from "../pages/AddNewPet.tsx";
 
@@ -39,6 +38,11 @@ const store = configureStore({
     }
 });
 
+function CurrentRoute() {
+    const location = useLocation();
+    return <span data-testid="current-route">{location.pathname}</span>;
+}
+
 describe("PetList Component", () => {
     it("Renders without crashing", () => {
         render(
@@ -56,10 +60,10 @@ describe("PetList Component", () => {
     it("Renders add new pet button and when clicked routes to /add-new-pet", async () => {
         render(
             <Provider store={emptyStore}>
-                <MemoryRouter>
+                <MemoryRouter initialEntries={["/"]}>
                     <Routes>
-                        <Route path="/" element={<PetList />} />
-                        <Route path="/add-new-pet" element={<AddNewPet />} />
+                        <Route path="/" element={<><PetList /><CurrentRoute /></>} />
+                        <Route path="/add-new-pet" element={<><AddNewPet /><CurrentRoute /></>} />
                     </Routes>
                 </MemoryRouter>
             </Provider>
@@ -69,8 +73,9 @@ describe("PetList Component", () => {
         expect(addNewPetBtn).toBeInTheDocument();
         
         await user.click(addNewPetBtn);
-        const selectPhotoBtn = screen.getByTestId("select-photo-btn");
-        expect(selectPhotoBtn).toBeInTheDocument();
+        
+        const newRoute = screen.getByTestId("current-route");
+        expect(newRoute).toHaveTextContent("/add-new-pet")
     })
 
     it("Renders a pet from store", () => {
