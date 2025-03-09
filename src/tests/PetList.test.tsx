@@ -13,7 +13,7 @@ const loadingStore = configureStore({
     reducer: {
         pets: petsReducer,
     }
-})
+});
 
 const emptyStore = configureStore({
     reducer: {
@@ -23,8 +23,21 @@ const emptyStore = configureStore({
             error: null
         })
     }
-    
-})
+});
+
+const store = configureStore({
+    reducer: {
+        pets: () => ({
+            pets: [{
+                id: '1',
+                name: 'poppy',
+                photo: 'poppy.jpg',
+            }],
+            loading: false,
+            error: null
+        })
+    }
+});
 
 describe("PetList Component", () => {
     it("Renders without crashing", () => {
@@ -34,11 +47,11 @@ describe("PetList Component", () => {
                     <PetList />
                 </MemoryRouter>
              </Provider>
-        )
+        );
         const loadingMsg = screen.getByTestId("petlist-loading");
         expect(loadingMsg).toBeInTheDocument();
-        expect(loadingMsg).toHaveTextContent(/Loading pets...$/)
-    })
+        expect(loadingMsg).toHaveTextContent(/Loading pets...$/);
+    });
 
     it("Renders add new pet button and when clicked routes to /add-new-pet", async () => {
         render(
@@ -50,14 +63,25 @@ describe("PetList Component", () => {
                     </Routes>
                 </MemoryRouter>
             </Provider>
-            
-        )
-        const user = userEvent.setup()
+        );
+        const user = userEvent.setup();
         const addNewPetBtn = screen.getByTestId("add-new-pet-btn");
-        expect(addNewPetBtn).toBeInTheDocument()
+        expect(addNewPetBtn).toBeInTheDocument();
         
-        await user.click(addNewPetBtn)
+        await user.click(addNewPetBtn);
         const selectPhotoBtn = screen.getByTestId("select-photo-btn");
-        expect(selectPhotoBtn).toBeInTheDocument()
+        expect(selectPhotoBtn).toBeInTheDocument();
     })
-})
+
+    it("Renders a pet from store", () => {
+        render(
+            <Provider store={store}>
+                <MemoryRouter>
+                    <PetList />
+                </MemoryRouter>
+             </Provider>
+        );
+        const petItem = screen.getByTestId("pet-item");
+        expect(petItem).toBeInTheDocument();
+    });
+});

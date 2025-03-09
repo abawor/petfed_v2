@@ -50,6 +50,7 @@ export default function PetList() {
                     <div
                         key={ pet.id }
                         {...bind(pet.id)}
+                        data-testid="pet-item"
                     >
                         <li className="flex w-32 h-32 overflow-hidden rounded-full">
                             <img src={ pet.photo } className="object-cover h-full w-full"/>
