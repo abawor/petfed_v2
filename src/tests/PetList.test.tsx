@@ -75,7 +75,7 @@ describe("PetList Component", () => {
         await user.click(addNewPetBtn);
         
         const newRoute = screen.getByTestId("current-route");
-        expect(newRoute).toHaveTextContent("/add-new-pet")
+        expect(newRoute.textContent).toBe("/add-new-pet")
     })
 
     it("Renders a pet from store", () => {
