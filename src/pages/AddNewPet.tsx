@@ -71,12 +71,14 @@ export default function AddNewPet() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="mb-4 p-2 w-full border border-slate-500 rounded-md"
+          data-testid="name-input"
         />
         <br/>
         <button
           type="button"
           onClick={handleSave}
           className="py-2 font-bold w-full bg-teal-400 text-white rounded-lg"
+          data-testid="save-btn"
         >
           Save
         </button>
