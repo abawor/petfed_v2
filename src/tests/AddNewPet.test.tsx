@@ -44,7 +44,7 @@ describe("Add New Pet Component", () => {
         render(
             <Provider store={store}>
                 <MemoryRouter initialEntries={["/add-new-pet"]}>
-                <Routes>
+                    <Routes>
                         <Route path="/" element={<><HomeScreen /><CurrentRoute /></>} />
                         <Route path="/add-new-pet" element={<><AddNewPet /><CurrentRoute /></>} />
                     </Routes>
