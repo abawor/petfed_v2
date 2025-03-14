@@ -24,7 +24,7 @@ export default function MealsList() {
         dispatch(deleteMeal(mealId))
    }
 
-   if (loading) return <p>Loading meals...</p>
+   if (loading) return <p data-testid="meal-list-loading">Loading meals...</p>
    if (error) return <p>Error: {error}...</p>
 
     return (
