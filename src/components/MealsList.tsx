@@ -32,6 +32,7 @@ export default function MealsList() {
             <Link
                 to="/add-new-meal"
                 className="aspect-square flex justify-center items-center text-teal-500 bg-teal-100 text-slate-500 rounded-lg border-solid border-4 border-teal-500"
+                data-testid="add-new-meal-btn"
             >
                 <FaPlus size={75}/>
             </Link>
