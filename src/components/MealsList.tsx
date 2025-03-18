@@ -39,7 +39,11 @@ export default function MealsList() {
             {meals !== undefined ? 
             meals.map((meal) => {
                 return (
-                    <li key={ meal.id } className="pl-1 text-start aspect-square rounded-lg border-solid border-4 border-slate-500">
+                    <li
+                        key={ meal.id }
+                        className="pl-1 text-start aspect-square rounded-lg border-solid border-4 border-slate-500"
+                        data-testid="meal-item"
+                    >
                         <div className="flex items-top justify-between">
                             <p className="font-bold text-2xl">{meal.name}</p>
                             <div>

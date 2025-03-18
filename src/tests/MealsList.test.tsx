@@ -24,6 +24,22 @@ const emptyStore = configureStore({
     }
 });
 
+const store = configureStore({
+    reducer: {
+        meals: () => ({
+            meals: [{
+                id: '1',
+                name: 'Breakfast',
+                quantity: "50",
+                type: "Dry",
+                unit: "grams",
+            }],
+            loading: false,
+            error: null
+        })
+    }
+});
+
 function CurrentRoute() {
     const location = useLocation();
     return <span data-testid="current-route">{location.pathname}</span>;
@@ -65,4 +81,15 @@ describe("MealList Component", () => {
         expect(newRoute.textContent).toBe("/add-new-meal")
     })
 
+    it("Renders a meal from store", () => {
+            render(
+                <Provider store={store}>
+                    <MemoryRouter>
+                        <MealsList />
+                    </MemoryRouter>
+                 </Provider>
+            );
+            const mealItem = screen.getByTestId("meal-item");
+            expect(mealItem).toBeInTheDocument();
+        });
 });
