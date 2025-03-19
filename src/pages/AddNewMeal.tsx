@@ -47,6 +47,7 @@ export default function AddNewMeal() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="mb-4 p-2 w-full border border-slate-500 rounded-md"
+                    data-testid="meal-name-input"
                 />
                 <Dropdown
                     options={foodTypes}
@@ -55,7 +56,6 @@ export default function AddNewMeal() {
                     placeholder="Type"
                     className="mb-4 w-full border border-slate-500 rounded-md"
                 />
-
                 <Dropdown
                     options={unitTypes}
                     onChange={(option) => setUnit(option.value)}
@@ -63,21 +63,21 @@ export default function AddNewMeal() {
                     placeholder="Unit"
                     className="mb-4 w-full border border-slate-500 rounded-md"
                 />
-
                 <input
                     type="text"
                     placeholder="Quantity"
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
                     className="mb-4 p-2 w-full border border-slate-500 rounded-md"
+                    data-testid="meal-quantity-input"
                 />
-
                 <button
-                type="button"
-                onClick={handleSave}
-                className="py-2 font-bold w-full bg-teal-400 text-white rounded-lg"
+                    type="button"
+                    onClick={handleSave}
+                    className="py-2 font-bold w-full bg-teal-400 text-white rounded-lg"
+                    data-testid="meal-save-btn"
                 >
-                Save
+                    Save
                 </button>
             </div>
         </div>
