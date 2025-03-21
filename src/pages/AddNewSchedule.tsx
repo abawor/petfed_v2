@@ -2,10 +2,8 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { addSchedule } from '../redux/Pets.tsx'
 import { useNavigate } from 'react-router-dom';
-import Select from 'react-select';
-import { SingleValue, MultiValue } from "react-select";
+import Select, { MultiValue } from "react-select";
 import { AppDispatch, RootState } from "../redux/store";
-import { Pet } from "../../types.ts";
 
 export default function AddNewMeal() {
     const { pets } = useSelector((state: RootState) => state.pets)
@@ -15,7 +13,7 @@ export default function AddNewMeal() {
     const [days, setDays] = useState<MultiValue<{value: string, label: string}>>([]);
     const [time, setTime] = useState('');
     const navigate = useNavigate();
-    console.log(days)
+
     const petList = 
         pets.map((pet) => {
             return (
@@ -68,7 +66,7 @@ export default function AddNewMeal() {
                     <Select
                         options={petList}
                         isMulti={false}
-                        onChange={(e: SingleValue<{value: Pet["id"], label: string}>) => {
+                        onChange={(e) => {
                             if (e) {
                                 setScheduledPet(e.value)}}
                             }
@@ -88,8 +86,7 @@ export default function AddNewMeal() {
                     <Select
                         options={weekdays}
                         isMulti={true}
-                        onChange={(e: MultiValue<{value: string, label: string}>) => {
-                            setDays(e)}}
+                        onChange={(e) => {setDays(e)}}
                         placeholder="Days"
                     />
                 </div>

@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addMeal } from '../redux/Meals.tsx'
 import { AppDispatch } from "../redux/store";
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
+import Select from "react-select";
+import "react-dropdown/style.css";
 
 export default function AddNewMeal() {
     const dispatch: AppDispatch = useDispatch()
@@ -13,8 +13,18 @@ export default function AddNewMeal() {
     const [type, setType] = useState('');
     const [quantity, setQuantity] = useState('');
     const [unit, setUnit] = useState('');
-    const foodTypes = ['Wet', 'Dry', 'Snack', 'Other'];
-    const unitTypes = ['grams', 'ounces', 'count', 'other'];
+    const foodTypes = [
+        {value: 'Wet', label: 'Wet'},
+        {value: 'Dry', label: 'Dry'},
+        {value: 'Snack', label: 'Snack'},
+        {value: 'Other', label: 'Other'}
+    ];
+    const unitTypes = [
+        {value: 'grams', label: 'grams'},
+        {value: 'ounces', label: 'ounces'},
+        {value: 'count', label: 'count'},
+        {value: 'other', label: 'other'}
+    ];
 
     const handleSave = () => {
         if (!name || !type || !quantity || !unit) {
@@ -49,17 +59,23 @@ export default function AddNewMeal() {
                     className="mb-4 p-2 w-full border border-slate-500 rounded-md"
                     data-testid="meal-name-input"
                 />
-                <Dropdown
+                <Select
                     options={foodTypes}
-                    onChange={(option) => setType(option.value)}
-                    value={""}
+                    isMulti={false}
+                    onChange={(e) => {
+                        if (e) {
+                            setType(e.value)}}
+                        }
                     placeholder="Type"
                     className="mb-4 w-full border border-slate-500 rounded-md"
                 />
-                <Dropdown
+                <Select
                     options={unitTypes}
-                    onChange={(option) => setUnit(option.value)}
-                    value={""}
+                    isMulti={false}
+                    onChange={(e) => {
+                        if (e) {
+                            setUnit(e.value)}}
+                        }
                     placeholder="Unit"
                     className="mb-4 w-full border border-slate-500 rounded-md"
                 />
