@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { addMeal } from '../redux/Meals.tsx'
 import { AppDispatch } from "../redux/store";
 import Select from "react-select";
-import "react-dropdown/style.css";
 
 export default function AddNewMeal() {
     const dispatch: AppDispatch = useDispatch()
