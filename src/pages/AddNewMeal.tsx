@@ -58,26 +58,36 @@ export default function AddNewMeal() {
                     className="mb-4 p-2 w-full border border-slate-500 rounded-md"
                     data-testid="meal-name-input"
                 />
-                <Select
-                    options={foodTypes}
-                    isMulti={false}
-                    onChange={(e) => {
-                        if (e) {
-                            setType(e.value)}}
-                        }
-                    placeholder="Type"
-                    className="mb-4 w-full border border-slate-500 rounded-md"
-                />
-                <Select
-                    options={unitTypes}
-                    isMulti={false}
-                    onChange={(e) => {
-                        if (e) {
-                            setUnit(e.value)}}
-                        }
-                    placeholder="Unit"
-                    className="mb-4 w-full border border-slate-500 rounded-md"
-                />
+                <form data-testid="food-type-form">
+                    <label htmlFor="food_type" />
+                    <Select
+                        name="food_type"
+                        inputId="food_type"
+                        options={foodTypes}
+                        isMulti={false}
+                        onChange={(e) => {
+                            if (e) {
+                                setType(e.value)}}
+                            }
+                            placeholder="Type"
+                            className="mb-4 w-full border border-slate-500 rounded-md"
+                    />
+                </form>
+                <form data-testid="unit-type-form">
+                    <label htmlFor="unit_type" />
+                    <Select
+                        name="unit_type"
+                        inputId="unit_type"
+                        options={unitTypes}
+                        isMulti={false}
+                        onChange={(e) => {
+                            if (e) {
+                                setUnit(e.value)}}
+                            }
+                        placeholder="Unit"
+                        className="mb-4 w-full border border-slate-500 rounded-md"
+                    />
+                </form>
                 <input
                     type="text"
                     placeholder="Quantity"

@@ -26,11 +26,11 @@ describe("Add New Meal Component", () => {
         const nameInput = screen.getByTestId("meal-name-input");
         expect(nameInput).toBeInTheDocument();
 
-        const typeSelect = screen.getByText("Type");
-        expect(typeSelect).toBeInTheDocument();
+        const typeSelect = screen.getByTestId("food-type-form");
+        expect(typeSelect).toHaveFormValues({food_type: ""})
 
-        const unitSelect = screen.getByText("Unit");
-        expect(unitSelect).toBeInTheDocument();
+        const unitSelect = screen.getByTestId("unit-type-form");
+        expect(unitSelect).toHaveFormValues({unit_type: ""})
 
         const quantitySelect = screen.getByTestId("meal-quantity-input");
         expect(quantitySelect).toBeInTheDocument();
