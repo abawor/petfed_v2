@@ -59,7 +59,7 @@ export default function AddNewMeal() {
                     data-testid="meal-name-input"
                 />
                 <form data-testid="food-type-form">
-                    <label htmlFor="food_type" />
+                    <label htmlFor="food_type" hidden>Type</label>
                     <Select
                         name="food_type"
                         inputId="food_type"
@@ -74,7 +74,7 @@ export default function AddNewMeal() {
                     />
                 </form>
                 <form data-testid="unit-type-form">
-                    <label htmlFor="unit_type" />
+                    <label htmlFor="unit_type" hidden>Unit</label>
                     <Select
                         name="unit_type"
                         inputId="unit_type"
