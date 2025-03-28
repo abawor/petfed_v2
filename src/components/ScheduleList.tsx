@@ -12,7 +12,7 @@ import { Pet, Schedule } from "../../types.ts";
 
 
 export default function ScheduleList() {
-    const { pets } = useSelector((state: RootState) => state.pets)
+    const { pets, loading, error } = useSelector((state: RootState) => state.pets)
     const dispatch: AppDispatch = useDispatch()
     
     useEffect(() => {
@@ -27,6 +27,9 @@ export default function ScheduleList() {
       dispatch(deleteSchedule([petId, scheduleId]))
     };
     
+    if (loading) return <p data-testid="schedule-list-loading">Loading schedules...</p>
+    if (error) return <p>Error: {error}...</p>
+
     return (
         <ul className="grid grid-cols-3 gap-4">
             <Link
