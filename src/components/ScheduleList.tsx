@@ -47,6 +47,7 @@ export default function ScheduleList() {
                             <li
                                 key={ schedule.id }
                                 className="pl-1 text-start aspect-square rounded-lg border-solid border-4 border-slate-500"
+                                data-testid="schedule-item"
                             >
                                 <div className="flex items-center justify-between">
                                     <p className="font-bold text-xl truncate">{pet.name}</p>

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getByLabelText, getByTestId, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import selectEvent from "react-select-event";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";

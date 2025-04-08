@@ -91,5 +91,5 @@ describe("MealList Component", () => {
             );
             const mealItem = screen.getByTestId("meal-item");
             expect(mealItem).toBeInTheDocument();
-        });
+    });
 });
