@@ -69,8 +69,8 @@ export default function AddNewMeal() {
                             if (e) {
                                 setType(e.value)}}
                             }
-                            placeholder="Type"
-                            className="mb-4 w-full border border-slate-500 rounded-md"
+                        placeholder="Type"
+                        className="mb-4 w-full border border-slate-500 rounded-md"
                     />
                 </form>
                 <form data-testid="unit-type-form">

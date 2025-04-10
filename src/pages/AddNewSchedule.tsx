@@ -61,9 +61,11 @@ export default function AddNewMeal() {
             <h1 className="text-3xl font-bold mb-6">Add new schedule</h1>
 
             <div className="w-3/5">
-
-                <div className="mb-4 leading-8 text-left w-full border border-slate-500 rounded-md">
+                <form data-testid="pet-form">
+                    <label htmlFor="pet" hidden>Pet</label>
                     <Select
+                        name="pet"
+                        inputId="pet"
                         options={petList}
                         isMulti={false}
                         onChange={(e) => {
@@ -71,8 +73,9 @@ export default function AddNewMeal() {
                                 setScheduledPet(e.value)}}
                             }
                         placeholder="Pet"
+                        className="mb-4 leading-8 text-left w-full border border-slate-500 rounded-md"
                     />
-                </div>
+                </form>
 
                 <input
                     type="text"
@@ -80,31 +83,38 @@ export default function AddNewMeal() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="mb-4 p-2 w-full border border-slate-500 rounded-md"
+                    data-testid="schedule-name-input"
                 />
 
-                <div className="mb-4 leading-8 text-left w-full border border-slate-500 rounded-md">
+                <form data-testid="days-form">
+                    <label htmlFor="days" hidden>Days</label>
                     <Select
+                        name="days"
+                        inputId="days"
                         options={weekdays}
                         isMulti={true}
                         onChange={(e) => {setDays(e)}}
                         placeholder="Days"
+                        className="mb-4 leading-8 text-left w-full border border-slate-500 rounded-md"
                     />
-                </div>
+                </form>
 
                 <div className="mb-4 leading-8 pl-1 text-left border border-slate-500 rounded-md">
                     <input
                         aria-label="Time"
                         type="time"
                         onChange={(e) => setTime(e.target.value)}
+                        data-testid="time-input"
                     />
                 </div>
 
                 <button
-                type="button"
-                onClick={handleSave}
-                className="py-2 font-bold w-full bg-teal-400 text-white rounded-lg"
+                    type="button"
+                    onClick={handleSave}
+                    className="py-2 font-bold w-full bg-teal-400 text-white rounded-lg"
+                    data-testid="schedule-save-btn"
                 >
-                Save
+                    Save
                 </button>
             </div>
         </div>
