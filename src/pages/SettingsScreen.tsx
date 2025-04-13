@@ -19,6 +19,7 @@ export default function SettingsScreen() {
                 className=""
                 checked={notifications}
                 onChange={() => setNotifications(!notifications)}
+                data-testid="global-notifications-toggle"
             />
         </div>
     )
