@@ -36,7 +36,7 @@ function CurrentRoute() {
 }
 
 describe("Add New Schedule Component", () => {
-    it("Displays all fields for adding a new schedule", async () => {
+    it("Displays all fields for adding a new schedule", () => {
         render(
             <Provider store={emptyStore}>
                 <MemoryRouter initialEntries={["/add-new-schedule"]}>
